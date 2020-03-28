@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_28_031724) do
+ActiveRecord::Schema.define(version: 2020_03_28_031842) do
 
   create_table "movies", force: :cascade do |t|
     t.string "imdb_id"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(version: 2020_03_28_031724) do
     t.decimal "length"
     t.decimal "price"
     t.decimal "sale_price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "provinces", force: :cascade do |t|
+    t.string "name"
+    t.decimal "pst_rate"
+    t.decimal "gst_rate"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
