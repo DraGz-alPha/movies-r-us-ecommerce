@@ -1,5 +1,6 @@
 class Order < ApplicationRecord
   belongs_to :customer
+  has_many :movie_orders
   has_many :movies, through: :movie_orders
 
   validates :reference_number, uniqueness: true
