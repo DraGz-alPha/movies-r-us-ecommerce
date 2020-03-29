@@ -6,4 +6,8 @@ class Order < ApplicationRecord
   validates :reference_number, uniqueness: true
   validates :reference_number, :pst_rate, :gst_rate, :subtotal,
             :total, :address, presence: true
+  
+  def display_name
+    self.reference_number # or whatever column you want
+  end
 end
