@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  quantity: 
+  movie_price: 9.99
+  movie: one
+  order: one
+
+two:
+  quantity: 
+  movie_price: 9.99
+  movie: two
+  order: two
