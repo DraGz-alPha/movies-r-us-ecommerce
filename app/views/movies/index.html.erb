@@ -1,0 +1,11 @@
+<h1>Movies R Us</h1>
+<p>Home</p>
+
+<% count = 0 %>
+<% @movies.each do |movie| %>
+  <div class="row">
+    <%= render partial: 'movie',
+              object: movie,
+              locals: { show_link: false } 
+    %>
+<% end %>
