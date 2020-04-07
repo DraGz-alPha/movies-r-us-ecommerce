@@ -6,6 +6,10 @@ class Movie < ApplicationRecord
   has_many :genres, through: :movie_genres
   has_many :producers, through: :movie_producers
 
+  accepts_nested_attributes_for :movie_orders, allow_destroy: true
+  accepts_nested_attributes_for :movie_genres, allow_destroy: true
+  accepts_nested_attributes_for :movie_producers, allow_destroy: true
+
   validates :imdb_number, uniqueness: true
   validates :imdb_number, :title, :description, :price, presence: true
 end
