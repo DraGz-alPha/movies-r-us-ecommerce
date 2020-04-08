@@ -78,6 +78,17 @@ NUMBER_OF_PAGES.times do
   current_page += 1
 end
 
+Page.create(title: 'Contact',
+  content: "Email: movies-r-us@gmail.com",
+  permalink: 'contact')
+
+Page.create(title: 'About',
+  content: "Movies R Us is an online movie store tailored specifically for movie enthusiasts, 
+            providing an amazing selection of movies for purchase to customers around the globe. 
+            Movies R Us currently employs 5 hard-working and passionate developers that strive 
+            to offer the best possible user experience for you, the die-hard movie fan. ",
+  permalink: 'about')
+
 puts "Created #{Movie.count} Movies."
 puts "Created #{Genre.count} Genres."
 puts "Created #{Producer.count} Producers."
