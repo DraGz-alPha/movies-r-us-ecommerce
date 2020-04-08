@@ -1,0 +1,15 @@
+<div class="col s3">
+  <div class="card" style="height: 620px">
+    <div class="card-image">
+      <img src=<%= movie.poster %>>
+      <span class="card-title"><%= movie.title %></span>
+      <%# <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">+</i></a> %>
+      <%= link_to '+++', add_to_cart_path(movie.id), method: :post,
+      class: "btn-floating halfway-fab waves-effect waves-light red" %>
+    </div>
+    <div class="card-content">
+      <p><%= truncate(movie.description, :length => 155) %><%= link_to 'Read more', root_path %></p>
+      <p><%= number_to_currency movie.price %></p>
+    </div>
+  </div>
+</div>

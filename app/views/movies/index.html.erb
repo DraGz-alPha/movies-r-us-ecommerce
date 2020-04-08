@@ -1,0 +1,18 @@
+<h1>Movies R Us - Home</h1>
+
+<details>
+  <summary>Shopping Cart (<%= @cart.size %>)</summary>
+  <ul>
+    <% @cart.each do |cart_item| %>
+      <li><%= cart_item.title %> - <%= link_to 'x', remove_from_cart_path(cart_item), method: :delete %></li>
+    <% end %>
+  </ul>
+</details>
+
+<% @movies.each do |movie| %>
+  <div class="row">
+    <%= render partial: 'movie',
+              object: movie,
+              locals: { show_link: false } 
+    %>
+<% end %>
