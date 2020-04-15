@@ -11,6 +11,7 @@
       </li>
     <% end %>
   </ul>
+  <%= button_to "Checkout", checkout_create_path, remote: true unless @cart.size == 0 %>
 </details>
 
 <% @movies.each do |movie| %>

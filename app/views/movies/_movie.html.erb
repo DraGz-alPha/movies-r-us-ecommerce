@@ -10,7 +10,6 @@
     <div class="card-content">
       <p><%= truncate(movie.description, :length => 150) %><%= link_to 'Read more', root_path %></p>
       <p><%= number_to_currency movie.price %></p>
-      <%= button_to "Buy Now", checkout_create_path, params: {id: movie.id}, remote: true %>
     </div>
   </div>
 </div>
