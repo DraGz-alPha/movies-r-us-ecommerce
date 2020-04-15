@@ -4,7 +4,7 @@ class MoviesController < ApplicationController
   before_action :load_cart
 
   def index
-    @movies = Movie.all
+    @movies = Movie.all.page(params[:page])
   end
 
   def show

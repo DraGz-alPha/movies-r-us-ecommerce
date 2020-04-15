@@ -4,12 +4,13 @@
       <img src=<%= movie.poster %>>
       <span class="card-title"><%= movie.title %></span>
       <%# <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">+</i></a> %>
-      <%= link_to '+++', add_to_cart_path(movie.id), method: :post,
+      <%= link_to '[+]', add_to_cart_path(movie.id), method: :post,
       class: "btn-floating halfway-fab waves-effect waves-light red" %>
     </div>
     <div class="card-content">
-      <p><%= truncate(movie.description, :length => 155) %><%= link_to 'Read more', root_path %></p>
+      <p><%= truncate(movie.description, :length => 150) %><%= link_to 'Read more', root_path %></p>
       <p><%= number_to_currency movie.price %></p>
+      <%= button_to "Buy Now", checkout_create_path, params: {id: movie.id}, remote: true %>
     </div>
   </div>
 </div>
