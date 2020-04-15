@@ -1,5 +1,5 @@
 ActiveAdmin.register Province do
-  permit_params :name, :pst_rate, :gst_rate, :image
+  permit_params :name, :pst_rate, :gst_rate, :hst_rate, :image
 
   form do |f|
     f.semantic_errors # shows errors on :base
