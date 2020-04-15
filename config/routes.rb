@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   delete 'movies/remove_from_cart/:id', to: 'movies#remove_from_cart', as: 'remove_from_cart'
 
   scope 'checkout' do
-    post 'create', to: 'checkout#create', as: 'checkout_create'
+    post 'create', to: 'checkout#create', as: 'checkout_create' # CAN USE :id PARAMS FOR THIS
     get 'success', to: 'checkout#success', as: 'checkout_success'
     get 'cancel', to: 'checkout#cancel', as: 'checkout_cancel'
   end
