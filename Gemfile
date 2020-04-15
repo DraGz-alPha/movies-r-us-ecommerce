@@ -31,6 +31,8 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'activeadmin'
 gem 'devise'
 
+gem 'stripe'
+
 gem 'httparty'
 
 gem 'kaminari'
