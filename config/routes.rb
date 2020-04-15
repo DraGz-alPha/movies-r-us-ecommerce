@@ -2,7 +2,8 @@ Rails.application.routes.draw do
 
   get 'pages/show'
   post 'movies/add_to_cart/:id', to: 'movies#add_to_cart', as: 'add_to_cart'
-  post 'movies/increment_quantity/:id', to: 'movies#increment_quantity', as: 'increment_quantity'
+  post 'movies/increase_quantity/:id', to: 'movies#increase_quantity', as: 'increase_quantity'
+  post 'movies/decrease_quantity/:id', to: 'movies#decrease_quantity', as: 'decrease_quantity'
   delete 'movies/remove_from_cart/:id', to: 'movies#remove_from_cart', as: 'remove_from_cart'
 
   scope 'checkout' do
