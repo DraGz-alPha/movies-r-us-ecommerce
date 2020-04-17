@@ -14,19 +14,19 @@ BASE_POSTER_URL = 'http://image.tmdb.org/t/p/w185/'
 NUMBER_OF_PAGES = 7
 current_page = 1
 
-Province.create(name: 'Alberta', pst_rate: 0, gst_rate: 0.05)
-Province.create(name: 'British Columbia', pst_rate: 0.07, gst_rate: 0.05)
-Province.create(name: 'Manitoba', pst_rate: 0.07, gst_rate: 0.05)
-Province.create(name: 'New Brunswick', pst_rate: 0, gst_rate: 0.15)
-Province.create(name: 'Newfoundland and Labrador', pst_rate: 0, gst_rate: 0.15)
-Province.create(name: 'Northwest Territories', pst_rate: 0, gst_rate: 0.05)
-Province.create(name: 'Nova Scotia', pst_rate: 0, gst_rate: 0.15)
-Province.create(name: 'Nunavut', pst_rate: 0, gst_rate: 0.05)
-Province.create(name: 'Ontario', pst_rate: 0, gst_rate: 0.13)
-Province.create(name: 'Prince Edward Island', pst_rate: 0, gst_rate: 0.15)
-Province.create(name: 'Quebec', pst_rate: 9.975, gst_rate: 0.05)
-Province.create(name: 'Saskatchewan', pst_rate: 0.06, gst_rate: 0.05)
-Province.create(name: 'Yukon', pst_rate: 0, gst_rate: 0.05)
+Province.create(name: 'Alberta', pst_rate: 0, gst_rate: 0.05, hst_rate: 0)
+Province.create(name: 'British Columbia', pst_rate: 0.07, gst_rate: 0.05, hst_rate: 0)
+Province.create(name: 'Manitoba', pst_rate: 0.07, gst_rate: 0.05, hst_rate: 0)
+Province.create(name: 'New Brunswick', pst_rate: 0, gst_rate: 0, hst_rate: 0.15)
+Province.create(name: 'Newfoundland and Labrador', pst_rate: 0, gst_rate: 0, hst_rate: 0.15)
+Province.create(name: 'Northwest Territories', pst_rate: 0, gst_rate: 0.05, hst_rate: 0)
+Province.create(name: 'Nova Scotia', pst_rate: 0, gst_rate: 0, hst_rate: 0.15)
+Province.create(name: 'Nunavut', pst_rate: 0, gst_rate: 0.05, hst_rate: 0)
+Province.create(name: 'Ontario', pst_rate: 0, gst_rate: 0, hst_rate: 0.13)
+Province.create(name: 'Prince Edward Island', pst_rate: 0, gst_rate: 0, hst_rate: 0.15)
+Province.create(name: 'Quebec', pst_rate: 9.975, gst_rate: 0.05, hst_rate: 0)
+Province.create(name: 'Saskatchewan', pst_rate: 0.06, gst_rate: 0.05, hst_rate: 0)
+Province.create(name: 'Yukon', pst_rate: 0, gst_rate: 0.05, hst_rate: 0)
 
 NUMBER_OF_PAGES.times do 
   movies_response = HTTParty.get("https://api.themoviedb.org/3/discover/movie?api_key=#{API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=false&page=#{current_page}")

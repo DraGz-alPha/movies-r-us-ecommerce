@@ -1,12 +1,25 @@
 <h1>Movies R Us - Home</h1>
+
+<% if current_customer %>
+  <%= link_to "Sign out", destroy_customer_session_path, method: :delete %>
+<% else %>
+  <%= link_to "Sign in", new_customer_session_path  %>
+  <%= link_to "Sign up", new_customer_registration_path  %>
+<% end %>
+
 <%= paginate @movies %>
 <details>
   <summary>Shopping Cart (<%= @cart.size %>)</summary>
   <ul>
     <% @cart.each do |cart_item| %>
-      <li><%= cart_item.title %> - <%= link_to 'x', remove_from_cart_path(cart_item), method: :delete %></li>
+      <li>
+        <%= cart_item.title %> - (x<%= session[:cart].fetch(cart_item.id.to_s) %>) <%= link_to '[+]', increase_quantity_url(cart_item), method: :post %>
+        <%= link_to '[-]', decrease_quantity_url(cart_item), method: :post %>
+        <%= link_to '[Remove]', remove_from_cart_path(cart_item), method: :delete %>
+      </li>
     <% end %>
   </ul>
+  <%= button_to "Checkout", checkout_create_path, remote: true unless @cart.size == 0 %>
 </details>
 
 <% @movies.each do |movie| %>
