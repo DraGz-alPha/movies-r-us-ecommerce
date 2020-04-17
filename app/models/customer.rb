@@ -7,5 +7,5 @@ class Customer < ApplicationRecord
   has_many :orders
 
   validates :email, :address, uniqueness: true
-  validates :address, presence: true
+  # validates :address, presence: true
 end
