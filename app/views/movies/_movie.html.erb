@@ -9,7 +9,7 @@
     </div>
     <div class="card-content">
       <p><%= truncate(movie.description, :length => 150) %><%= link_to 'Read more', root_path %></p>
-      <p><%= number_to_currency movie.price %></p>
+      <p><%= number_to_currency movie.price / 100.0 %></p>
     </div>
   </div>
 </div>

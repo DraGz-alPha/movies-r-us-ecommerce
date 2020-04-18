@@ -12,11 +12,11 @@ class CheckoutController < ApplicationController
       purchase_price = 0
 
       movies.each do |movie|
-        purchase_price += (movie.price * 100).to_i * session[:cart].fetch(movie.id.to_s)
+        purchase_price += movie.price * session[:cart].fetch(movie.id.to_s)
         line_items << {
           name: movie.title,
           description: movie.description,
-          amount: (movie.price * 100).to_i,
+          amount: movie.price,
           currency: 'cad',
           quantity: session[:cart].fetch(movie.id.to_s),
           images: [movie.poster]
@@ -90,9 +90,9 @@ class CheckoutController < ApplicationController
     tax = 0
 
     session_details['display_items'].each do |item|
-      subtotal += (item['amount'].to_i / 100) * item['quantity']
+      subtotal += item['amount'] / 100 * item['quantity']
       if item['custom']['name'] == 'PST' || item['custom']['name'] == 'GST' || item['custom']['name'] == 'HST'
-        tax += item['amount'].to_i / 100
+        tax += item['amount'] / 100
       end
     end
     
@@ -110,7 +110,7 @@ class CheckoutController < ApplicationController
       movie_quantity = movie['quantity']
       MovieOrder.create(movie: current_movie,
                         order: order,
-                        quantity: movie['quantity'].to_i,
+                        quantity: movie['quantity'],
                         movie_price: movie['amount'])
     end
   end

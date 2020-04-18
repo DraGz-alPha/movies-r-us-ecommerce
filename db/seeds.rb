@@ -44,7 +44,7 @@ NUMBER_OF_PAGES.times do
       movie_poster = BASE_POSTER_URL + movie_data['poster_path']
       movie_release_date = movie_data['release_date']
       movie_length = movie_data['runtime']
-      movie_price = rand(4.99..39.99)
+      movie_price = rand(499..3999)
       # puts "#{movie_data['original_title']} #{movie_data['genres']}"
 
       if movie_imdb_number and movie_title and movie_description and movie_data['genres'].length > 0 && movie_data['production_companies'].length > 0 then
