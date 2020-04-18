@@ -4,7 +4,7 @@ class Order < ApplicationRecord
   has_many :movies, through: :movie_orders
 
   validates :reference_number, uniqueness: true
-  validates :reference_number, :pst_rate, :gst_rate, :subtotal,
+  validates :reference_number, :subtotal,
             :total, :address, presence: true
   
   def display_name
