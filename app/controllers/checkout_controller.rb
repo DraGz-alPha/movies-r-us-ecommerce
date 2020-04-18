@@ -90,9 +90,10 @@ class CheckoutController < ApplicationController
     tax = 0
 
     session_details['display_items'].each do |item|
-      subtotal += item['amount'] / 100 * item['quantity']
       if item['custom']['name'] == 'PST' || item['custom']['name'] == 'GST' || item['custom']['name'] == 'HST'
-        tax += item['amount'] / 100
+        tax += item['amount']
+      else
+        subtotal += item['amount'] * item['quantity']
       end
     end
     
