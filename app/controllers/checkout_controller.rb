@@ -64,7 +64,7 @@ class CheckoutController < ApplicationController
         #   }
         # ],
         line_items: line_items,
-        success_url: checkout_success_url,
+        success_url: checkout_success_url + '?session_id={CHECKOUT_SESSION_ID}',
         cancel_url: checkout_cancel_url
       )
 
@@ -74,6 +74,44 @@ class CheckoutController < ApplicationController
     else
       redirect_to new_customer_session_path
       nil
+    end
+  end
+
+  def success
+    @session = Stripe::Checkout::Session.retrieve(params[:session_id])
+    @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
+
+    session_details = JSON.parse(@session.to_s)
+
+    puts @session
+    puts @payment_intent
+
+    subtotal = 0
+    tax = 0
+
+    session_details['display_items'].each do |item|
+      subtotal += (item['amount'].to_i / 100) * item['quantity']
+      if item['custom']['name'] == 'PST' || item['custom']['name'] == 'GST' || item['custom']['name'] == 'HST'
+        tax += item['amount'].to_i / 100
+      end
+    end
+    
+    order = Order.create(reference_number: rand(1..1000),
+                        customer: current_customer,
+                        pst_rate: current_customer.province.pst_rate,
+                        gst_rate: current_customer.province.gst_rate,
+                        hst_rate: current_customer.province.hst_rate,
+                        subtotal: subtotal,
+                        total: subtotal + tax,
+                        address: current_customer.address)
+
+    session_details['display_items'].each do |movie|
+      current_movie = Movie.where(title: movie['custom']['name']).first
+      movie_quantity = movie['quantity']
+      MovieOrder.create(movie: current_movie,
+                        order: order,
+                        quantity: movie['quantity'].to_i,
+                        movie_price: movie['amount'])
     end
   end
 end
