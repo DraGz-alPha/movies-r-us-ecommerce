@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  get 'orders/index'
+  get 'orders/show'
+
   get 'pages/show'
   post 'movies/add_to_cart/:id', to: 'movies#add_to_cart', as: 'add_to_cart'
   post 'movies/increase_quantity/:id', to: 'movies#increase_quantity', as: 'increase_quantity'
