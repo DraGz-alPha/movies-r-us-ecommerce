@@ -82,9 +82,7 @@ class CheckoutController < ApplicationController
     @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
 
     session_details = JSON.parse(@session.to_s)
-
-    puts @session
-    puts @payment_intent
+    payment_details = JSON.parse(@payment_intent.to_s)
 
     subtotal = 0
     tax = 0
@@ -104,7 +102,8 @@ class CheckoutController < ApplicationController
                         hst_rate: current_customer.province.hst_rate,
                         subtotal: subtotal,
                         total: subtotal + tax,
-                        address: current_customer.address)
+                        address: current_customer.address,
+                        order_status: payment_details['status'] == 'succeeded' ? 'Paid' : 'Failed')
 
     session_details['display_items'].each do |movie|
       current_movie = Movie.where(title: movie['custom']['name']).first
