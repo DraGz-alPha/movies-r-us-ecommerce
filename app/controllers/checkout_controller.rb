@@ -14,46 +14,46 @@ class CheckoutController < ApplicationController
       movies.each do |movie|
         purchase_price += movie.price * session[:cart].fetch(movie.id.to_s)
         line_items << {
-          name: movie.title,
+          name:        movie.title,
           description: movie.description,
-          amount: movie.price,
-          currency: 'cad',
-          quantity: session[:cart].fetch(movie.id.to_s),
-          images: [movie.poster]
+          amount:      movie.price,
+          currency:    "cad",
+          quantity:    session[:cart].fetch(movie.id.to_s),
+          images:      [movie.poster]
         }
       end
 
       if current_customer.province.pst_rate > 0
         line_items << {
-          name: 'PST',
+          name:        "PST",
           description: "Provincial Sales Tax @ #{current_customer.province.pst_rate * 100}%",
-          amount: (purchase_price * current_customer.province.pst_rate).to_i,
-          currency: 'cad',
-          quantity: 1
+          amount:      (purchase_price * current_customer.province.pst_rate).to_i,
+          currency:    "cad",
+          quantity:    1
         }
       end
       if current_customer.province.gst_rate > 0
         line_items << {
-          name: 'GST',
+          name:        "GST",
           description: "Goods and Services Tax @ #{current_customer.province.gst_rate * 100}%",
-          amount: (purchase_price * current_customer.province.gst_rate).to_i,
-          currency: 'cad',
-          quantity: 1
+          amount:      (purchase_price * current_customer.province.gst_rate).to_i,
+          currency:    "cad",
+          quantity:    1
         }
       end
       if current_customer.province.hst_rate > 0
         line_items << {
-          name: 'HST',
+          name:        "HST",
           description: "Harmonized Sales Tax @ #{current_customer.province.hst_rate * 100}%",
-          amount: (purchase_price * current_customer.province.hst_rate).to_i,
-          currency: 'cad',
-          quantity: 1
+          amount:      (purchase_price * current_customer.province.hst_rate).to_i,
+          currency:    "cad",
+          quantity:    1
         }
       end
 
       @session = Stripe::Checkout::Session.create(
-        customer_email: current_customer.email,
-        payment_method_types: ['card'],
+        customer_email:       current_customer.email,
+        payment_method_types: ["card"],
         # line_items: [
         #   {
         #     name: movie.title,
@@ -63,9 +63,9 @@ class CheckoutController < ApplicationController
         #     quantity: 1
         #   }
         # ],
-        line_items: line_items,
-        success_url: checkout_success_url + '?session_id={CHECKOUT_SESSION_ID}',
-        cancel_url: checkout_cancel_url
+        line_items:           line_items,
+        success_url:          checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url:           checkout_cancel_url
       )
 
       respond_to do |format|
@@ -87,31 +87,31 @@ class CheckoutController < ApplicationController
     subtotal = 0
     tax = 0
 
-    session_details['display_items'].each do |item|
-      if item['custom']['name'] == 'PST' || item['custom']['name'] == 'GST' || item['custom']['name'] == 'HST'
-        tax += item['amount']
+    session_details["display_items"].each do |item|
+      if item["custom"]["name"] == "PST" || item["custom"]["name"] == "GST" || item["custom"]["name"] == "HST"
+        tax += item["amount"]
       else
-        subtotal += item['amount'] * item['quantity']
+        subtotal += item["amount"] * item["quantity"]
       end
     end
-    
-    order = Order.create(reference_number: rand(1..1000),
-                        customer: current_customer,
-                        pst_rate: current_customer.province.pst_rate,
-                        gst_rate: current_customer.province.gst_rate,
-                        hst_rate: current_customer.province.hst_rate,
-                        subtotal: subtotal,
-                        total: subtotal + tax,
-                        address: current_customer.address,
-                        order_status: payment_details['status'] == 'succeeded' ? 'Paid' : 'Failed')
 
-    session_details['display_items'].each do |movie|
-      current_movie = Movie.where(title: movie['custom']['name']).first
-      movie_quantity = movie['quantity']
-      MovieOrder.create(movie: current_movie,
-                        order: order,
-                        quantity: movie['quantity'],
-                        movie_price: movie['amount'])
+    order = Order.create(reference_number: payment_details["id"],
+                         customer:         current_customer,
+                         pst_rate:         current_customer.province.pst_rate,
+                         gst_rate:         current_customer.province.gst_rate,
+                         hst_rate:         current_customer.province.hst_rate,
+                         subtotal:         subtotal,
+                         total:            subtotal + tax,
+                         address:          current_customer.address,
+                         order_status:     payment_details["status"] == "succeeded" ? "Paid" : "Failed")
+
+    session_details["display_items"].each do |movie|
+      current_movie = Movie.where(title: movie["custom"]["name"]).first
+      movie_quantity = movie["quantity"]
+      MovieOrder.create(movie:       current_movie,
+                        order:       order,
+                        quantity:    movie["quantity"],
+                        movie_price: movie["amount"])
     end
   end
 end
