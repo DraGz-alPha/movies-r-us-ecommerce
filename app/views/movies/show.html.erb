@@ -1,2 +1,36 @@
-<h1>Movies R Us</h1>
-<h1></h1>
+<%= render partial: "layouts/cart",
+           object: @cart
+%>
+
+<div class="row">
+  <div class="col s3">
+    <div class="card">
+      <div class="card-image">
+        <img src="<%= @movie.poster %>" alt="<%= @movie.title %>">
+        <span class="card-title"><b><%= @movie.title %></b></span>
+        <%# <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">+</i></a> %>
+        <%= link_to '<i class="material-icons">add_shopping_cart</i>'.html_safe, add_to_cart_path(@movie.id), method: :post,
+        class: "btn-floating halfway-fab waves-effect waves-light red"%>
+        
+      </div>
+      <div class="card-content">
+        <p><%= @movie.description %></p><br>
+        <p>Release Date: <%= @movie.release_date.strftime("%B %d, %Y") %></p>
+        <p>Length: <%= @movie.length %> minutes</p><br>
+        <p>
+          Genres: 
+          <% @movie.genres.each do |genre| %>
+            <%= genre.name %>,
+          <% end %>
+        </p><br>
+        <p>
+          Producers: 
+          <% @movie.producers.each do |producer| %>
+            <%= producer.name %>,
+          <% end %>
+        </p><br>
+        <p><%= number_to_currency @movie.price / 100.0 %></p>
+      </div>
+    </div>
+  </div>
+</div>
