@@ -4,10 +4,22 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all.page(params[:page])
+    @genres = Genre.all
   end
 
   def show
     @movie = Movie.includes(:genres).find(params[:id])
+  end
+
+  def search
+    genre_id = params[:genre_id]
+    search_title = params[:title]
+    if genre_id.blank?
+      @movies = Movie.where("title LIKE ?", "%#{params[:title]}%").page(params[:page])
+    else
+      @movies = Movie.joins(:genres).where("title LIKE ? AND genres.id = ?", "%#{params[:title]}%", params[:genre_id]).page(params[:page])
+    end
+    @genres = Genre.all
   end
 
   def add_to_cart
@@ -36,7 +48,7 @@ class MoviesController < ApplicationController
   def decrease_quantity
     id = params[:id]
     current_quantity = session[:cart].fetch(id)
-    if current_quantity > 1 then
+    if current_quantity > 1
       updated_movie = { id => current_quantity -= 1 }
       session[:cart].merge!(updated_movie)
     end

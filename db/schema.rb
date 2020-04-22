@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_16_144055) do
+ActiveRecord::Schema.define(version: 2020_04_18_033102) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 2020_04_16_144055) do
 
   create_table "movie_orders", force: :cascade do |t|
     t.integer "quantity"
-    t.decimal "movie_price"
+    t.integer "movie_price"
     t.integer "movie_id", null: false
     t.integer "order_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -118,8 +118,8 @@ ActiveRecord::Schema.define(version: 2020_04_16_144055) do
     t.string "poster"
     t.datetime "release_date"
     t.decimal "length"
-    t.decimal "price"
-    t.decimal "sale_price"
+    t.integer "price"
+    t.integer "sale_price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -128,12 +128,14 @@ ActiveRecord::Schema.define(version: 2020_04_16_144055) do
     t.string "reference_number"
     t.decimal "pst_rate"
     t.decimal "gst_rate"
-    t.decimal "subtotal"
-    t.decimal "total"
+    t.integer "subtotal"
+    t.integer "total"
     t.string "address"
     t.integer "customer_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "hst_rate"
+    t.string "order_status"
     t.index ["customer_id"], name: "index_orders_on_customer_id"
   end
 

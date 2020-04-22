@@ -1,0 +1,26 @@
+<table class="striped">
+  <thead>
+    <tr>
+      <th>Reference Number:</th>
+      <th>Pst Rate</th>
+      <th>Gst Rate</th>
+      <th>Hst Rate</th>
+      <th>Subtotal</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= link_to "#{order.reference_number }", orders_show_path(order), method: :post %></td>
+        <td><%= order.pst_rate %></td>
+        <td><%= order.gst_rate %></td>
+        <td><%= order.hst_rate %></td>
+        <td><%= number_to_currency order.subtotal / 100.0 %></td>
+        <td><%= number_to_currency order.total / 100.0 %></td>
+      </tr>
+    <% end %>
+    
+  </tbody>
+</table>
+            

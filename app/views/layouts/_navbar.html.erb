@@ -1,0 +1,25 @@
+<nav>
+  <div class="nav-wrapper">
+  <%= link_to "Movies R Us", root_path, class: "brand-logo" %>
+    <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    <ul class="right hide-on-med-and-down">
+      <li><%= link_to "About", "/about" %></li>
+      <li><%= link_to "Contact", "/contact" %></li>
+      <% if current_customer %>
+        <li><%= link_to "Sign out", destroy_customer_session_path, method: :delete %></li>
+        <% if current_customer.name.blank? %>
+          <li><b>Welcome, <%= current_customer.email %></b></li>
+        <% else %>
+          <li><b>Welcome, <%= current_customer.name %></b></li>
+        <% end %>
+      <% else %>
+        <li><%= link_to "Sign in", new_customer_session_path  %></li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
+
+<ul class="sidenav" id="mobile-demo">
+  <li><%= link_to "About", "/about" %></li>
+  <li><%= link_to "Contact", "/contact" %></li>
+</ul>

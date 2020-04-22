@@ -4,10 +4,10 @@ class Order < ApplicationRecord
   has_many :movies, through: :movie_orders
 
   validates :reference_number, uniqueness: true
-  validates :reference_number, :pst_rate, :gst_rate, :subtotal,
-            :total, :address, presence: true
-  
+  validates :reference_number, :subtotal,
+            :total, :address, :order_status, presence: true
+
   def display_name
-    self.reference_number # or whatever column you want
+    reference_number # or whatever column you want
   end
 end
