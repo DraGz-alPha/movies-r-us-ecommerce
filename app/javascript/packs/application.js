@@ -19,9 +19,7 @@ require("channels")
 document.addEventListener("turbolinks:load", function () {
   var elems = document.querySelectorAll("select");
   var instances = M.FormSelect.init(elems);
-});
 
-document.addEventListener('DOMContentLoaded', function() {
-  var elems = document.querySelectorAll('.sidenav');
-  var instances = M.Sidenav.init(elems, options);
+  var elements = document.querySelectorAll('.sidenav');
+  var instancess = M.Sidenav.init(elements);
 });
