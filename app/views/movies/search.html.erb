@@ -9,11 +9,13 @@
   <%= render 'movies/search_form' %>
 </div>
 
+<p>
+  Found <%= pluralize(@movies.size, 'result') %>
+  for the search term "<%= params[:title] %>".
+</p>
+
 <div class="row">
-  <% @movies.each do |movie| %>
-    <%= render partial: 'movie',
-              object: movie,
-              locals: { show_link: false } 
-    %>
-  <% end %>
+  <%= render partial: 'movies/movie',
+             collection: @movies,
+             locals: { show_link: true } %>
 </div>
