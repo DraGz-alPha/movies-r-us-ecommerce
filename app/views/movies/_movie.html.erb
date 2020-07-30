@@ -4,8 +4,13 @@
       <img src="<%= movie.poster %>" alt="<%= movie.title %>">
 
       <%# <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">+</i></a> %>
-      <%= link_to '<i class="material-icons">add_shopping_cart</i>'.html_safe, add_to_cart_path(movie.id), method: :post,
-      class: "btn-floating halfway-fab waves-effect waves-light red"%>
+      <% unless session[:cart].include?(movie.id.to_s) %>
+        <%= link_to '<i class="material-icons">add_shopping_cart</i>'.html_safe, add_to_cart_path(movie.id), method: :post,
+        class: "btn-floating halfway-fab waves-effect waves-light red"%>
+      <% else %>
+        <%= link_to '<i class="material-icons">remove_shopping_cart</i>'.html_safe, remove_from_cart_path(movie.id, "home"), method: :delete,
+        class: "btn-floating halfway-fab waves-effect waves-light red"%>
+      <% end %>
     </div>
     <div class="movie-card-title">
       <h5><%= movie.title %></h5>

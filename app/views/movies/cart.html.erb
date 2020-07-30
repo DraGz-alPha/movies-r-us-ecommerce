@@ -27,7 +27,7 @@
         <%= session[:cart].fetch(cart_item.id.to_s) %>
         <%= link_to '[+]', increase_quantity_url(cart_item), method: :post %>
         <%= link_to '[-]', decrease_quantity_url(cart_item), method: :post %><br>
-        <%= link_to '[Remove]', remove_from_cart_path(cart_item), method: :delete %>
+        <%= link_to '[Remove]', remove_from_cart_path(cart_item, "cart"), method: :delete %>
       </td>
       <td><%= number_to_currency cart_item.price / 100.0 %></td>
       <td><%= number_to_currency cart_item.price * session[:cart].fetch(cart_item.id.to_s) / 100.0 %></td>
