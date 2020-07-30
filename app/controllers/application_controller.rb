@@ -13,7 +13,11 @@ class ApplicationController < ActionController::Base
   def load_cart
     if current_customer
       movies = session[:cart]
-      @cart = Movie.find(movies.keys)
+      if !movies.nil?
+        @cart = Movie.find(movies.keys)
+      else
+        @cart = []
+      end
     end
   end
 end

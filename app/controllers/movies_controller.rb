@@ -37,10 +37,19 @@ class MoviesController < ApplicationController
 
   def remove_from_cart
     id = params[:id]
+    route = params[:route]
     session[:cart].delete(id)
-    redirect_to cart_path
+    if route == "cart"
+      redirect_to cart_path
+    elsif route == "home"
+      redirect_to root_path
+    end
   end
-  # No associated view. Redirects back to index.
+
+  def delete_cart
+    session[:cart] = nil
+    redirect_to root_path
+  end
 
   def increase_quantity
     id = params[:id]
