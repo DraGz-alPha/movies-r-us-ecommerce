@@ -12,6 +12,11 @@
         <% else %>
           <li><b>Welcome, <%= current_customer.name %></b></li>
         <% end %>
+        <div>
+          <%= link_to '<i class="material-icons">shopping_cart</i>'.html_safe, cart_path,
+            class: "btn-floating halfway-fab waves-effect waves-light red"%>
+            <span class="badge"><%= @cart.size %></span>
+        </div>
       <% else %>
         <li><%= link_to "Sign in", new_customer_session_path  %></li>
       <% end %>
@@ -20,6 +25,23 @@
 </nav>
 
 <ul class="sidenav" id="mobile-demo">
+  <li>
+    <% if current_customer %>
+      <div class="user-view">
+        <a href=""><span class="black-text name"><%= current_customer.name %></span></a>
+        <a href=""><span class="black-text email"><%= current_customer.email %></span></a>
+      </div>
+      <li>
+        <%= link_to "Cart [#{@cart.size}]", cart_path %>
+      </li>
+    <% end %>
+  </li>
+  <li><div class="divider"></div></li>
   <li><%= link_to "About", "/about" %></li>
   <li><%= link_to "Contact", "/contact" %></li>
+  <% if current_customer %>
+    <li><%= link_to "Sign out", destroy_customer_session_path, method: :delete %></li>
+  <% else %>
+    <li><%= link_to "Sign in", new_customer_session_path  %></li>
+  <% end %>
 </ul>

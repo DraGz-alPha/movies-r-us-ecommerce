@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'pages/show'
 
   get "search", to: "movies#search", as: "search" # search_path
+  get 'movies/cart', to: 'movies#cart', as: 'cart'
   post 'movies/add_to_cart/:id', to: 'movies#add_to_cart', as: 'add_to_cart'
   post 'movies/increase_quantity/:id', to: 'movies#increase_quantity', as: 'increase_quantity'
   post 'movies/decrease_quantity/:id', to: 'movies#decrease_quantity', as: 'decrease_quantity'
