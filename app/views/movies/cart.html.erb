@@ -35,4 +35,17 @@
   <% end %> 
   </tbody>
 </table>
-<%= button_to "Checkout", checkout_create_path, class: "waves-effect waves-light btn", style: "float: right", remote: true unless @cart.size == 0 %>
+  <div style="float: right; padding-bottom: 25px">
+    <div class="row">
+      <div class="col s7">
+        <%= link_to "Remove All", delete_cart_path, 
+            class: "red waves-effect waves-light btn",
+            method: :delete unless @cart.size == 0 %>
+      </div>
+      <div class="col s5">
+        <%= button_to "Checkout", checkout_create_path, 
+            class: "waves-effect waves-light btn",
+            remote: true unless @cart.size == 0 %>
+      </div>
+    </div>
+  </div>
