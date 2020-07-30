@@ -9,9 +9,11 @@ Customer.destroy_all
 Province.destroy_all
 Page.destroy_all
 
-API_KEY = "7c518daaea75bf24a571c434be285147".freeze
-BASE_POSTER_URL = "http://image.tmdb.org/t/p/w185/".freeze
-NUMBER_OF_PAGES = 5
+# PRODUCTION
+API_KEY = ENV["TMDb_API_KEY"].to_s
+
+BASE_POSTER_URL = "http://image.tmdb.org/t/p/w185/"
+NUMBER_OF_PAGES = 20
 current_page = 1
 
 Province.create(name: "Alberta", pst_rate: 0, gst_rate: 0.05, hst_rate: 0)
@@ -31,9 +33,9 @@ Province.create(name: "Yukon", pst_rate: 0, gst_rate: 0.05, hst_rate: 0)
 NUMBER_OF_PAGES.times do
   movies_response = HTTParty.get("https://api.themoviedb.org/3/discover/movie?api_key=#{API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=false&page=#{current_page}")
   movies = JSON.parse(movies_response.body)
-
+  puts movies
   movies["results"].each do |movie|
-    next unless movie["original_language"] == "en"
+    next unless movie["original_language"] == "en" && !movie["poster_path"].nil?
 
     movie_response = HTTParty.get("https://api.themoviedb.org/3/movie/#{movie['id']}?api_key=#{API_KEY}&language=en-US")
     movie_data = JSON.parse(movie_response.body)
@@ -46,7 +48,7 @@ NUMBER_OF_PAGES.times do
     movie_release_date = movie_data["release_date"]
     movie_length = movie_data["runtime"]
     movie_price = rand(499..3999)
-    # puts "#{movie_data['original_title']} #{movie_data['genres']}"
+    puts "#{movie_data['original_title']} #{movie_data['genres']}"
 
     unless movie_imdb_number && movie_title && movie_description && movie_data["genres"].length > 0 && movie_data["production_companies"].length > 0
       next
@@ -74,6 +76,7 @@ NUMBER_OF_PAGES.times do
   end
 
   current_page += 1
+  puts current_page
 end
 
 Page.create(title:     "Contact",
