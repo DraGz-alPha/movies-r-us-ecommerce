@@ -26,7 +26,7 @@
 
 <ul class="sidenav" id="mobile-demo">
   <li>
-    <% if current_customer && current_customer.name.blank? %>
+    <% if current_customer %>
       <div class="user-view">
         <a href=""><span class="black-text name"><%= current_customer.name %></span></a>
         <a href=""><span class="black-text email"><%= current_customer.email %></span></a>
