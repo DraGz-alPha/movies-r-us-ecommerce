@@ -1,5 +1,5 @@
 <h5>Shopping Cart (<%= @cart.size %>)</h5>
-<table>
+<table style="margin-bottom: 20px">
   <thead>
     <tr>
       <th>Product Details</th>
@@ -12,13 +12,21 @@
     <% @cart.each do |cart_item| %>
     <tr>
       <td>
-        <img src="<%= cart_item.poster %>" alt="<%= cart_item.title %>">
-        <%= cart_item.title %>
+        <div class="row">
+          <div class="col">
+            <img src="<%= cart_item.poster %>" alt="<%= cart_item.title %>">
+          </div>
+          <div class="col s6">
+            <div style="padding-bottom: 15px"><%= cart_item.title %></div>
+            <div style="padding-bottom: 15px"><%= cart_item.release_date.strftime("%B %d, %Y") %></div>
+            <div style="padding-bottom: 15px"><%= cart_item.length %> mins</div>
+          </div>
+        </div>
       </td>
       <td>
         <%= session[:cart].fetch(cart_item.id.to_s) %>
         <%= link_to '[+]', increase_quantity_url(cart_item), method: :post %>
-        <%= link_to '[-]', decrease_quantity_url(cart_item), method: :post %>
+        <%= link_to '[-]', decrease_quantity_url(cart_item), method: :post %><br>
         <%= link_to '[Remove]', remove_from_cart_path(cart_item), method: :delete %>
       </td>
       <td><%= number_to_currency cart_item.price / 100.0 %></td>
@@ -27,4 +35,4 @@
   <% end %> 
   </tbody>
 </table>
-<%= button_to "Checkout", checkout_create_path, remote: true unless @cart.size == 0 %>
+<%= button_to "Checkout", checkout_create_path, class: "waves-effect waves-light btn", remote: true unless @cart.size == 0 %>
