@@ -14,7 +14,7 @@ class MoviesController < ApplicationController
     genre_id = params[:genre_id]
     search_title = params[:title]
     if genre_id.blank?
-      @movies = Movie.where("title LIKE ?", "%#{params[:title]}%").page(params[:page])
+      @movies = Movie.where("title LIKE ?", "%#{params[:title].downcase}%").page(params[:page])
     else
       @movies = Movie.joins(:genres).where("title LIKE ? AND genres.id = ?", "%#{params[:title]}%", params[:genre_id]).page(params[:page])
     end
