@@ -35,4 +35,4 @@
   <% end %> 
   </tbody>
 </table>
-<%= button_to "Checkout", checkout_create_path, class: "waves-effect waves-light btn", remote: true unless @cart.size == 0 %>
+<%= button_to "Checkout", checkout_create_path, class: "waves-effect waves-light btn", style: "float: right", remote: true unless @cart.size == 0 %>
