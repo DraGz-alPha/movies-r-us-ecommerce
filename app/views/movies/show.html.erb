@@ -1,32 +1,54 @@
 <div class="row">
-  <div class="col s3">
+  <div class="movie-card-title">
+    <h3 class="movie-title-show"><%= @movie.title %></h3>
+  </div>
+  <div class="col s12 m5 l3">
     <div class="card">
       <div class="card-image">
         <img src="<%= @movie.poster %>" alt="<%= @movie.title %>">
-        <span class="card-title"><b><%= @movie.title %></b></span>
         <%# <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">+</i></a> %>
         <%= link_to '<i class="material-icons">add_shopping_cart</i>'.html_safe, add_to_cart_path(@movie.id), method: :post,
         class: "btn-floating halfway-fab waves-effect waves-light red"%>
-        
-      </div>
-      <div class="card-content">
-        <p><%= @movie.description %></p><br>
-        <p>Release Date: <%= @movie.release_date.strftime("%B %d, %Y") %></p>
-        <p>Length: <%= @movie.length %> minutes</p><br>
-        <p>
-          Genres: 
-          <% @movie.genres.each do |genre| %>
-            <%= genre.name %>,
-          <% end %>
-        </p><br>
-        <p>
-          Producers: 
-          <% @movie.producers.each do |producer| %>
-            <%= producer.name %>,
-          <% end %>
-        </p><br>
-        <p><%= number_to_currency @movie.price / 100.0 %></p>
       </div>
     </div>
+  </div>
+  <div class="col s12 m5 l9">
+    <table class="movie-table">
+      <thead>
+        <tr>
+          <th>Release Date</th>
+          <th>Length</th>
+          <th>Producers</th>
+          <th>Genres</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="movie-table-data"><%= @movie.release_date.strftime("%B %d, %Y") %></td>
+          <td class="movie-table-data"><%= @movie.length %> minutes</td>
+          <td class="movie-table-data">
+            <% @movie.producers.each do |producer| %>
+              <%= producer.name %>,
+            <% end %>
+          </td>
+          <td class="movie-table-data">
+            <% @movie.genres.each do |genre| %>
+              <%= genre.name %>,
+            <% end %>
+          </td>
+        </tr>
+      <tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col s12 m12 l8">
+    <p><%= @movie.description %></p>
+  </div>
+  <div class="row">
+    <div class="col s3 offset-s">
+    <h5>
+      Price: 
+      <%= number_to_currency @movie.price / 100.0 %>
+    </h5>
   </div>
 </div>
