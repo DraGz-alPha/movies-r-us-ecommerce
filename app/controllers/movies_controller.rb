@@ -25,9 +25,13 @@ class MoviesController < ApplicationController
   end
 
   def add_to_cart
-    id = params[:id].to_i
-    session[:cart][id] = 1 unless session[:cart].include?(id)
-    redirect_to root_path
+    if current_customer
+      id = params[:id].to_i
+      session[:cart][id] = 1 unless session[:cart].include?(id)
+      redirect_to root_path
+    else
+      redirect_to new_customer_session_path
+    end
   end
   # No associated view. Redirects back to index.
 
