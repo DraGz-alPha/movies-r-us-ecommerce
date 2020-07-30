@@ -11,7 +11,7 @@ Page.destroy_all
 
 API_KEY = "7c518daaea75bf24a571c434be285147".freeze
 BASE_POSTER_URL = "http://image.tmdb.org/t/p/w185/".freeze
-NUMBER_OF_PAGES = 7
+NUMBER_OF_PAGES = 5
 current_page = 1
 
 Province.create(name: "Alberta", pst_rate: 0, gst_rate: 0.05, hst_rate: 0)
@@ -94,4 +94,5 @@ puts "Created #{MovieGenre.count} Movie Genres."
 puts "Created #{MovieProducer.count} Movie Producers."
 puts "Created #{Province.count} Provinces."
 
-# AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+AdminUser.create!(email: ENV["AA_EMAIL"], password: ENV["AA_PASSWORD"], password_confirmation: ENV["AA_CONFIRM_PASSWORD"]) if Rails.env.production?
