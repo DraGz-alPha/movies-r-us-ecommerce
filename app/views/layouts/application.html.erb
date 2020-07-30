@@ -20,7 +20,8 @@
 
   <body>
     <div class="container">
-      <%= render partial: 'layouts/navbar' %>
+      <%= render partial: 'layouts/navbar',
+          object: @cart %>
       <%= yield %>
     </div>
   </body>
