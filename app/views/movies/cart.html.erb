@@ -1,5 +1,5 @@
 <h5>Shopping Cart (<%= @cart.size %>)</h5>
-<table style="margin-bottom: 20px">
+<table class="highlight" style="margin-bottom: 20px">
   <thead>
     <tr>
       <th>Product Details</th>
@@ -17,17 +17,31 @@
             <img src="<%= cart_item.poster %>" alt="<%= cart_item.title %>">
           </div>
           <div class="col s6">
-            <div style="padding-bottom: 15px"><%= cart_item.title %></div>
+            <div style="padding-bottom: 15px"><%= link_to "<b>#{cart_item.title}</b>".html_safe, cart_item %></div>
             <div style="padding-bottom: 15px"><%= cart_item.release_date.strftime("%B %d, %Y") %></div>
             <div style="padding-bottom: 15px"><%= cart_item.length %> mins</div>
           </div>
         </div>
       </td>
       <td>
-        <%= session[:cart].fetch(cart_item.id.to_s) %>
-        <%= link_to '[+]', increase_quantity_url(cart_item), method: :post %>
-        <%= link_to '[-]', decrease_quantity_url(cart_item), method: :post %><br>
-        <%= link_to '[Remove]', remove_from_cart_path(cart_item, "cart"), method: :delete %>
+        <%= link_to '<i class="material-icons">add</i>'.html_safe, 
+            increase_quantity_url(cart_item), 
+            class: 'btn-floating btn-small waves-effect waves-light green', 
+            method: :post %>
+
+        <b><%= session[:cart].fetch(cart_item.id.to_s) %></b>
+
+        <%= link_to '<i class="material-icons">remove</i>'.html_safe, 
+            decrease_quantity_url(cart_item), 
+            class: 'btn-floating btn-small waves-effect waves-light red', 
+            method: :post unless session[:cart].fetch(cart_item.id.to_s) == 1 %><br>
+        
+        <div style="padding-top: 10px">
+          <%= link_to 'Remove',
+              remove_from_cart_path(cart_item, "cart"),
+              class: 'waves-effect waves-light btn-small',
+              method: :delete %>
+        </div>
       </td>
       <td><%= number_to_currency cart_item.price / 100.0 %></td>
       <td><%= number_to_currency cart_item.price * session[:cart].fetch(cart_item.id.to_s) / 100.0 %></td>
