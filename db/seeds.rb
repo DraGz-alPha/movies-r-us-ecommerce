@@ -8,12 +8,13 @@ Movie.destroy_all
 Customer.destroy_all
 Province.destroy_all
 Page.destroy_all
+AdminUser.destroy_all
 
 # PRODUCTION
 API_KEY = ENV["TMDb_API_KEY"].to_s
 
 BASE_POSTER_URL = "http://image.tmdb.org/t/p/w185/"
-NUMBER_OF_PAGES = 20
+NUMBER_OF_PAGES = 25
 current_page = 1
 
 Province.create(name: "Alberta", pst_rate: 0, gst_rate: 0.05, hst_rate: 0)
@@ -35,7 +36,7 @@ NUMBER_OF_PAGES.times do
   movies = JSON.parse(movies_response.body)
   puts movies
   movies["results"].each do |movie|
-    next unless movie["original_language"] == "en" && !movie["poster_path"].nil?
+    next unless movie["original_language"] == "en" && !movie["poster_path"].nil? && movie["original_title"].size() < 45
 
     movie_response = HTTParty.get("https://api.themoviedb.org/3/movie/#{movie['id']}?api_key=#{API_KEY}&language=en-US")
     movie_data = JSON.parse(movie_response.body)
