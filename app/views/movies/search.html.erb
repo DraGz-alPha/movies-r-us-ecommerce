@@ -1,7 +1,6 @@
-<%= paginate @movies %>
-
 <div class="row" style="margin-top: 50px">
-  <h5>Search movies by genre:</h5>
+  <%= paginate @movies %>
+  <h5 style="text-align: center">Search movies by genre:</h5>
   <%= render 'movies/search_form' %>
 </div>
 
